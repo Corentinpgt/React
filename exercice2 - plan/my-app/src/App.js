@@ -1,94 +1,149 @@
 import "./css/base.css";
+import React, { useState } from "react";
 
-export default function App() {
+
+
+function Items(advs) {
   return (
     <>
-      <h2 className="offer-section__title">Prix et option à l'achat</h2>
-      <p className="offer-section__description">
-        Découvrez l'avenir de la mobilité avec des prix compétitifs et des
-        options d'achat flexibles chez Auto Innovation.
-      </p>
-      <Pricing name="Starter Package" price="29999.99" />
+      {advs.advs.map((adv) => {
+        let mark;
+        if (adv.included) {
+          mark = <span className="advantage__checkmark">✓</span>;
+        } else {
+          mark = "";
+        }
+        return (
+          <li key={advs.advs.indexOf(adv)} className="advantage">
+            {mark}
+            <p className="advantage__text">{adv.option}</p>
+          </li>
+        );
+      })}
     </>
   );
 }
 
-function Items(value) {
-  if (value.check) {
-    mark = "✓";
-  } else {
-    mark = "";
+function Pricing(prices) {
+  return (
+    <>
+      <div className="box">
+        {prices.prices.map((price) => {
+          return (
+            <>
+              <ul className="offer-box">
+                <li key={prices.prices.indexOf(price)} className="offer-box__header">
+                  <h3 className="offer-box__name">{price.title}</h3>
+                  <p className="offer-box__price">{price.price}</p>
+                </li>
+                <Items advs={price.advantages} />
+                <a href="#Forms2" className="header__lien">
+                  <button className="header__button btn--hero__nav">
+                    Get Started
+                  </button>
+                </a>
+              </ul>
+            </>
+          );
+        })}
+      </div>
+    </>
+  );
+}
+
+export default function App() {
+
+
+
+  let data = {
+    title: "Prix et option à l'achat",
+    subtitle:
+      "Découvrez l'avenir de la mobilité avec des prix compétitifs et des options d'achat flexibles chez Auto Innovation.",
+    prices: [
+      {
+        title: "Starter Package",
+        price: "29 999.99",
+        advantages: [
+          { included: true, option: "Assurance auto complémentaire" },
+          { included: true, option: "Première recharge offerte" },
+          { included: true, option: "Assurance contre le vol" },
+          { included: true, option: "Service de rappel d'entretien" },
+          { included: false, option: "Nettoyage hebdomadaire" },
+          { included: false, option: "Service de diagnostic à distance" },
+          { included: false, option: "Service de remplissage du réservoir" },
+          { included: false, option: "Service de réparation à domicile" },
+          { included: false, option: "Entretien régulier" },
+          { included: false, option: "Recharge d'hydrogène illimité" },
+        ],
+      },
+      {
+        title: "Prenium Package",
+        price: "35 999.99",
+        advantages: [
+          { included: true, option: "Assurance auto complémentaire" },
+          { included: true, option: "Première recharge offerte" },
+          { included: true, option: "Assurance contre le vol" },
+          { included: true, option: "Service de rappel d'entretien" },
+          { included: true, option: "Nettoyage hebdomadaire" },
+          { included: true, option: "Service de diagnostic à distance" },
+          { included: true, option: "Service de remplissage du réservoir" },
+          { included: false, option: "Service de réparation à domicile" },
+          { included: false, option: "Entretien régulier" },
+          { included: false, option: "Recharge d'hydrogène illimité" },
+        ],
+      },
+      {
+        title: "Prestige Package",
+        price: "49 999.99",
+        advantages: [
+          { included: true, option: "Assurance auto complémentaire" },
+          { included: true, option: "Première recharge offerte" },
+          { included: true, option: "Assurance contre le vol" },
+          { included: true, option: "Service de rappel d'entretien" },
+          { included: true, option: "Nettoyage hebdomadaire" },
+          { included: true, option: "Service de diagnostic à distance" },
+          { included: true, option: "Service de remplissage du réservoir" },
+          { included: true, option: "Service de réparation à domicile" },
+          { included: true, option: "Entretien régulier" },
+          { included: true, option: "Recharge d'hydrogène illimité" },
+        ],
+      },
+    ],
+  };
+  if (isActive) {
+
   }
-  return (
-    <li className="advantage">
-      <span className="advantage__checkmark">{mark}</span>
-      <p className="advantage__text">{value.text}</p>
-    </li>
-  );
+  else {
+    return (
+      <>
+        <section>
+          <div className="offer">
+            <div className="offer-section">
+              <h2 className="offer-section__title">{data.title}</h2>
+              <p className="offer-section__description">{data.subtitle}</p>
+              <ToggleButton />
+              <Pricing prices={data.prices} />
+            </div>
+          </div>
+        </section>
+      </>
+    );
+  }
+
+  
 }
 
-function Pricing(value) {
+
+const ToggleButton = () => {
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleButton = () => {
+    setIsActive(!isActive);
+  };
+
   return (
-    <ul className="offer-box">
-      <li className="offer-box__header">
-        <h3 className="offer-box__name">{value.name}</h3>
-        <p className="offer-box__price">{value.price}</p>
-      </li>
-      <Items value='[]'/>
-    </ul>
+    <div className={`toggle-button ${isActive ? 'active' : ''}`} onClick={toggleButton}>
+      <div className={`inner-circle ${isActive ? 'active' : ''}`} />
+    </div>
   );
-}
-
-<ul class="offer-box">
-  <li class="offer-box__header">
-    <h3 class="offer-box__name">Premium Package</h3>
-    <p class="offer-box__price">35 999.99</p>
-  </li>
-  <li class="offer-box__advantages"></li>
-  <li class="advantage">
-    <span class="advantage__checkmark">✓</span>
-    <p class="advantage__text">Assurance auto complémentaire</p>
-  </li>
-  <li class="advantage">
-    <span class="advantage__checkmark">✓</span>
-    <p class="advantage__text">Première recharge offerte</p>
-  </li>
-  <li class="advantage">
-    <span class="advantage__checkmark">✓</span>
-    <p class="advantage__text">Assurance contre le vol</p>
-  </li>
-  <li class="advantage">
-    <span class="advantage__checkmark">✓</span>
-    <p class="advantage__text">Service de rappel d'entretien</p>
-  </li>
-  <li class="advantage">
-    <span class="advantage__checkmark">✓</span>
-    <p class="advantage__text">Nettoyage hebdomadaire</p>
-  </li>
-  <li class="advantage">
-    <span class="advantage__checkmark">✓</span>
-    <p class="advantage__text">Service de diagnostic à distance</p>
-  </li>
-  <li class="advantage">
-    <span class="advantage__checkmark">✓</span>
-    <p class="advantage__text">Service de remplissage du réservoir</p>
-  </li>
-  <li class="advantage">
-    <span class="advantage__checkmark">  &nbsp;</span>
-    <p class="advantage__text">Service de réparation à domicile</p>
-  </li>
-  <li class="advantage">
-    <span class="advantage__checkmark">  &nbsp;</span>
-    <p class="advantage__text">Entretien régulier</p>
-  </li>
-  <li class="advantage">
-    <span class="advantage__checkmark">  &nbsp;</span>
-    <p class="advantage__text">Recharge d'hydrogène illimité</p>
-  </li>
-
-  <li>
-    <a href="#Forms2" class="header__lien">
-      <button class="header__button btn--hero__nav"> Get Started</button>
-    </a>
-  </li>
-</ul>;
+};

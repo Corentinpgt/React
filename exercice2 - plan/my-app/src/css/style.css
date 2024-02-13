@@ -133,3 +133,27 @@
   border: var(--dark-grey) 2px solid;
 
 }
+
+
+.toggle-button {
+  width: 60px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: #ccc;
+  position: relative;
+  cursor: pointer;
+}
+
+.inner-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #fff;
+  position: absolute;
+  top: 3px;
+  transition: transform 0.3s;
+}
+
+.toggle-button.active .inner-circle {
+  transform: translateX(30px);
+}
